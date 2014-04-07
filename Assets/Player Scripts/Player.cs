@@ -9,10 +9,10 @@ public class Player : MonoBehaviour
 	public bool jump = false;				// Condition for whether the player should jump.
 	
 	
-	public float moveForce = 365f;			// Amount of force added to move the player left and right.
-	public float maxSpeed = 5f;				// The fastest the player can travel in the x axis.
+	public float moveForce;				// Amount of force added to move the player left and right.
+	public float maxSpeed;				// The fastest the player can travel in the x axis.
 	public AudioClip[] jumpClips;			// Array of clips for when the player jumps.
-	public float jumpForce = 1000f;			// Amount of force added when the player jumps.
+	public float jumpForce; 			// Amount of force added when the player jumps.
 	public AudioClip[] taunts;				// Array of clips for when the player taunts.
 	public float tauntProbability = 50f;	// Chance of a taunt happening.
 	public float tauntDelay = 1f;			// Delay for when the taunt should happen.
@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
 				rigidbody2D.AddForce (Vector2.right * h * moveForce);
 			
 			// If the player's horizontal velocity is greater than the maxSpeed...
-			if (Mathf.Abs (rigidbody2D.velocity.x) > maxSpeed)
+			if (Mathf.Abs (rigidbody2D.velocity.x) >= maxSpeed)
 				// ... set the player's velocity to the maxSpeed in the x axis.
 				rigidbody2D.velocity = new Vector2 (Mathf.Sign (rigidbody2D.velocity.x) * maxSpeed, rigidbody2D.velocity.y);
 			
