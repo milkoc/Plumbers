@@ -155,4 +155,5 @@ public class Player : MonoBehaviour
 			rigidbody.position = syncPosition;
 		}
 	}
+
 }
