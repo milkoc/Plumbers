@@ -4,20 +4,48 @@ using System.Collections;
 public class Coin : MonoBehaviour
 {
 
-	void OnTriggerEnter2D(Collider collider ) {
+	void OnTriggerEnter2D(Collider2D coll) {
 //		if (collider.tag == "Coin") {
 //			score += 5;
 //			Destroy(collider.gameObject);
 //		}
-				if (collider.gameObject.tag == "Player") {
-						Destroy (this.gameObject);	
-						CoinController.coins += 5;
-				}
+		if (spawnedFlag && coll.gameObject.tag == "Player") {
+			despawn();
+			CoinController.coins += 1;
 		}
+	}
+	const double respawnSec = 5;
+	double timeToSpawn;
+	bool spawnedFlag = true;
+	Color normalColor;
 	void OnCollisionEnter2D(Collision2D coll){
-		if (coll.gameObject.tag == "Player") {
-			Destroy(this.gameObject);	
-			CoinController.coins += 5;
+		if (spawnedFlag && coll.gameObject.tag == "Player") {
+			despawn();
+			CoinController.coins += 1;
+		}
+	}
+
+	void despawn()
+	{
+		spawnedFlag = false;
+		timeToSpawn = respawnSec;
+		normalColor = GetComponent<SpriteRenderer> ().color;
+		GetComponent<SpriteRenderer>().color = new Color(0f, 0f, 0f, 0f); //invisible
+	}
+
+	void spawn()
+	{
+		spawnedFlag = true;
+		GetComponent<SpriteRenderer>().color = normalColor;
+	}
+
+	void Update()
+	{
+		if(!spawnedFlag) {
+			timeToSpawn -= Time.deltaTime;
+			if (timeToSpawn <= 0){
+				spawn();
+			}
 		}
 	}
 }

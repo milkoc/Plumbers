@@ -9,7 +9,7 @@ public class NetworkManager : MonoBehaviour {
     private const string gameName = "Room1";
 
 	private const int port = 11000;
-	private const int maxPlayers = 3;
+	private const int maxPlayers = 4;
 
     private void StartServer() {
 		Network.InitializeServer(maxPlayers, port, !Network.HavePublicAddress());
@@ -17,8 +17,7 @@ public class NetworkManager : MonoBehaviour {
     }
 
     void OnServerInitialized() {
-        Debug.Log("Server Initializied");
-		SpawnPlayer();
+        Debug.Log("Server Initialized");
     }
 
     private HostData[] hostList;
