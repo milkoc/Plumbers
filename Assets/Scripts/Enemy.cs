@@ -24,19 +24,20 @@ public class Enemy : MonoBehaviour
 		// Setting up the references.
 		ren = transform.Find("body").GetComponent<SpriteRenderer>();
 		frontCheck = transform.Find("frontCheck").transform;
-		score = GameObject.Find("Score").GetComponent<Score>();
+		//score = GameObject.Find("Score").GetComponent<Score>();
+			//zakomentowane - wyrzucało wyjątek
 	}
 
 	void FixedUpdate ()
 	{
 		// Create an array of all the colliders in front of the enemy.
-		Collider2D[] frontHits = Physics2D.OverlapPointAll(frontCheck.position, 1);
+		Collider2D[] frontHits = Physics2D.OverlapPointAll(frontCheck.position); //zmienione - szuka po wszystkich warstwach
 
 		// Check each of the colliders.
 		foreach(Collider2D c in frontHits)
 		{
 			// If any of the colliders is an Obstacle...
-			if(c.tag == "Obstacle")
+			if(c.tag == "Wall")
 			{
 				// ... Flip the enemy and stop checking the other colliders.
 				Flip ();
