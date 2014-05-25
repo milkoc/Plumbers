@@ -322,7 +322,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: .0500000007
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_FixedAngle: 1
   m_IsKinematic: 0
   m_Interpolate: 1
@@ -506,6 +506,9 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 986fa1b8984964da79d1be0597332fb2, type: 3}
   tauntProbability: 50
   tauntDelay: 1
+  gravityForce: 30
+  m_InterpolationBackTime: .10000000000000001
+  m_ExtrapolationLimit: .5
 --- !u!148 &14800000
 NetworkView:
   m_ObjectHideFlags: 1
@@ -514,7 +517,7 @@ NetworkView:
   m_GameObject: {fileID: 100008}
   m_Enabled: 1
   m_StateSynchronization: 1
-  m_Observed: {fileID: 400008}
+  m_Observed: {fileID: 11400000}
   m_ViewID:
     m_ID: 0
     m_Type: 0
