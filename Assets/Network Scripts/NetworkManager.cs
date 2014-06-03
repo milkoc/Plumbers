@@ -1,73 +1,100 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class NetworkManager : MonoBehaviour {
+public class NetworkManager : MonoBehaviour
+{
 
-	public GameObject playerPrefab;
+		public GameObject playerPrefab;
+		private const string typeName = "SuperPlumbingSquadSE";
+		private const string gameName = "Room1";
+		private const int port = 11000;
+		private const int maxPlayers = 4;
 
-    private const string typeName = "SuperPlumbingSquadSE";
-    private const string gameName = "Room1";
+		private void StartServer ()
+		{
+				Network.InitializeServer (maxPlayers, port, !Network.HavePublicAddress ());
+				MasterServer.RegisterHost (typeName, gameName);
+		}
 
-	private const int port = 11000;
-	private const int maxPlayers = 4;
+		void OnServerInitialized ()
+		{
+				Debug.Log ("Server Initialized");
+				SpawnPlayer ();
+		}
 
-    private void StartServer() {
-		Network.InitializeServer(maxPlayers, port, !Network.HavePublicAddress());
-        MasterServer.RegisterHost(typeName, gameName);
-    }
+		private HostData[] hostList;
 
-    void OnServerInitialized() {
-        Debug.Log("Server Initialized");
-    }
+		private void RefreshHostList ()
+		{
+				MasterServer.RequestHostList (typeName);
+		}
 
-    private HostData[] hostList;
+		void OnMasterServerEvent (MasterServerEvent msEvent)
+		{
+				if (msEvent == MasterServerEvent.HostListReceived)
+						hostList = MasterServer.PollHostList ();
+		}
 
-    private void RefreshHostList() {
-        MasterServer.RequestHostList(typeName);
-    }
+		private void JoinServer (HostData hostData)
+		{
+				Network.Connect (hostData);
+		}
 
-    void OnMasterServerEvent(MasterServerEvent msEvent) {
-        if (msEvent == MasterServerEvent.HostListReceived)
-            hostList = MasterServer.PollHostList();
-    }
+		void OnConnectedToServer ()
+		{
+				Debug.Log ("Server Joined");
+				SpawnPlayer ();
+		}
 
-    private void JoinServer(HostData hostData) {
-        Network.Connect(hostData);
-    }
+		private void SpawnPlayer ()
+		{
+				Network.Instantiate (playerPrefab, new Vector3 (0f, 5f, 0f), Quaternion.identity, 0);
+		}
 
-    void OnConnectedToServer() {
-        Debug.Log("Server Joined");
-		SpawnPlayer();
-    }
+		void OnGUI ()
+		{
+				if (!Network.isClient && !Network.isServer) {
+						if (GUI.Button (new Rect (100, 100, 250, 100), "Start Server"))
+								StartServer ();
 
-	private void SpawnPlayer() {
-		Network.Instantiate(playerPrefab, new Vector3(0f, 5f, 0f), Quaternion.identity, 0);
-	}
+						if (GUI.Button (new Rect (100, 250, 250, 100), "Refresh Hosts"))
+								RefreshHostList ();
 
-    void OnGUI() {
-        if (!Network.isClient && !Network.isServer) {
-            if (GUI.Button(new Rect(100, 100, 250, 100), "Start Server"))
-                StartServer();
+						if (hostList != null) {
+								for (int i = 0; i < hostList.Length; i++) {
+										if (GUI.Button (new Rect (400, 100 + (110 * i), 300, 100), hostList [i].gameName))
+												JoinServer (hostList [i]);
+								}
+						}
+				} else if (Network.isClient) {
+						if (GUI.Button (new Rect (0, 100, 100, 50), "Disconnect"))
+								Network.CloseConnection (Network.connections [0], true);
+				} else if (Network.isServer) {
+			if (GUI.Button (new Rect (0, 100, 100, 50), "Close Server")) {
+							//networkView.RPC("RemoteDisconnect", RPCMode.Others);
 
-            if (GUI.Button(new Rect(100, 250, 250, 100), "Refresh Hosts"))
-                RefreshHostList();
 
-            if (hostList != null) {
-                for (int i = 0; i < hostList.Length; i++) {
-                    if (GUI.Button(new Rect(400, 100 + (110 * i), 300, 100), hostList[i].gameName))
-                        JoinServer(hostList[i]);
-                }
-            }
-        }
-    }
+								Network.Disconnect (200);
+								MasterServer.UnregisterHost ();
+						}
+				}
+		}
 
-	// Use this for initialization
-	void Start () {
+		// Use this for initialization
+		void Start ()
+		{
 
-	}
+		}
 	
-	// Update is called once per frame
-	void Update () {
+		// Update is called once per frame
+		void Update ()
+		{
 	
+		}
+
+	void OnPlayerDisconnected(NetworkPlayer player) {
+		Debug.Log("Clean up after player " +  player);
+		Network.RemoveRPCs(player);
+		Network.DestroyPlayerObjects(player);
 	}
 }

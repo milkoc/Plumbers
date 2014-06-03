@@ -317,5 +317,11 @@ public class Player : MonoBehaviour
 			
 		}
 	}
+    void OnDisconnectedFromServer(NetworkDisconnection info)
+    {
+        //Network.Destroy (GetComponent(NetworkView).viewID);
+        Network.Destroy(((NetworkView)GetComponent("NetworkView")).viewID);
+    }
+
 	
 }
