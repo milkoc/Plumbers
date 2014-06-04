@@ -19,7 +19,7 @@ public class NetworkManager : MonoBehaviour
 		void OnServerInitialized ()
 		{
 				Debug.Log ("Server Initialized");
-				SpawnPlayer ();
+				//SpawnPlayer ();
 		}
 
 		private HostData[] hostList;
@@ -54,8 +54,12 @@ public class NetworkManager : MonoBehaviour
 		void OnGUI ()
 		{
 				if (!Network.isClient && !Network.isServer) {
-						if (GUI.Button (new Rect (100, 100, 250, 100), "Start Server"))
+						if (GUI.Button (new Rect (100, 100, 250, 100), "Start Server")){
+
 								StartServer ();
+								Application.LoadLevel("server");
+
+							}
 
 						if (GUI.Button (new Rect (100, 250, 250, 100), "Refresh Hosts"))
 								RefreshHostList ();

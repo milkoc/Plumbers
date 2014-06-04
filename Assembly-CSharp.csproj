@@ -48,6 +48,7 @@
   <ItemGroup>
      <Compile Include="Assets\Network Scripts\NetworkManager.cs" />
      <Compile Include="Assets\Network Scripts\NetworkRigidbody.cs" />
+     <Compile Include="Assets\Network Scripts\Server.cs" />
      <Compile Include="Assets\Player Scripts\Player.cs" />
      <Compile Include="Assets\Scripts\BackgroundParallax.cs" />
      <Compile Include="Assets\Scripts\BackgroundPropSpawner.cs" />
