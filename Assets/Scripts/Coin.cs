@@ -11,7 +11,8 @@ public class Coin : MonoBehaviour
 //		}
 		if (spawnedFlag && coll.gameObject.tag == "Player") {
 			despawn();
-			CoinController.coins += 1;
+			if(networkView.isMine)
+			Player.Score += 1;
 		}
 	}
 	const double respawnSec = 5;
@@ -21,7 +22,7 @@ public class Coin : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D coll){
 		if (spawnedFlag && coll.gameObject.tag == "Player") {
 			despawn();
-			CoinController.coins += 1;
+			Player.Score += 1;
 		}
 	}
 

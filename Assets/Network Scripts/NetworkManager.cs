@@ -70,10 +70,10 @@ public class NetworkManager : MonoBehaviour
 												JoinServer (hostList [i]);
 								}
 						}
-				} else if (Network.isClient) {
+				} /*else if (Network.isClient) {
 						if (GUI.Button (new Rect (0, 100, 100, 50), "Disconnect"))
 								Network.CloseConnection (Network.connections [0], true);
-				} else if (Network.isServer) {
+				} */else if (Network.isServer) {
 			if (GUI.Button (new Rect (0, 100, 100, 50), "Close Server")) {
 							//networkView.RPC("RemoteDisconnect", RPCMode.Others);
 

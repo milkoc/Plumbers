@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 	public AudioClip[] taunts;				// Array of clips for when the player taunts.
 	public float tauntProbability = 50f;	// Chance of a taunt happening.
 	public float tauntDelay = 1f;			// Delay for when the taunt should happen.
-	
+	public static int Score = 0;
 	public float gravityForce;
 	
 	private int tauntIndex;					// The index of the taunts array indicating the most recent taunt.
