@@ -48,4 +48,14 @@ public class Coin : MonoBehaviour
 			}
 		}
 	}
+	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
+		if (stream.isWriting) {
+			bool spawn = spawnedFlag;
+			stream.Serialize(ref spawn);
+		} else {
+			bool spawned = false;
+			stream.Serialize(ref spawned);
+			spawnedFlag = spawned;
+		}
+	}
 }
