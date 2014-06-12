@@ -51,17 +51,17 @@ public class Coin : MonoBehaviour
 	void OnSerializeNetworkView(BitStream stream, NetworkMessageInfo info) {
 		if (stream.isWriting) {
 			bool spawn = spawnedFlag;
-			double toSpawn = timeToSpawn;
+			//double toSpawn = timeToSpawn;
 			stream.Serialize(ref spawn);
-			stream.Serialize(ref toSpawn);
+			//stream.Serialize(ref toSpawn);
 		} else {
 			bool spawned = false;
-			double toSpawn = 0 ;
+			//double toSpawn = 0 ;
 			stream.Serialize(ref spawned);
-			stream.Serialize(ref toSpawn);
+			//stream.Serialize(ref toSpawn);
 
 			spawnedFlag = spawned;
-			timeToSpawn = toSpawn;
+			//timeToSpawn = toSpawn;
 		}
 	}
 }
