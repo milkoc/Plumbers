@@ -11,8 +11,15 @@ public class Coin : MonoBehaviour
 //		}
 		if (spawnedFlag && coll.gameObject.tag == "Player") {
 			despawn();
-			if(networkView.isMine)
-			Player.Score += 1;
+			if(NetworkManager.gracze[0] == Network.player)
+				Player.punkty[0] += 1;
+			if(NetworkManager.gracze[1] == Network.player)
+				Player.punkty[1] += 1;
+
+			if(NetworkManager.gracze[2] == Network.player)
+				Player.punkty[2] += 1;
+			if(NetworkManager.gracze[3] == Network.player)
+				Player.punkty[3] += 1;
 		}
 	}
 	const double respawnSec = 5;
@@ -22,7 +29,14 @@ public class Coin : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D coll){
 		if (spawnedFlag && coll.gameObject.tag == "Player") {
 			despawn();
-			Player.Score += 1;
+			if(NetworkManager.gracze[0] == Network.player)
+				Player.punkty[0] += 1;
+			if(NetworkManager.gracze[1] == Network.player)
+				Player.punkty[1] += 1;
+			if(NetworkManager.gracze[2] == Network.player)
+				Player.punkty[2] += 1;
+			if(NetworkManager.gracze[3] == Network.player)
+				Player.punkty[3] += 1;
 		}
 	}
 

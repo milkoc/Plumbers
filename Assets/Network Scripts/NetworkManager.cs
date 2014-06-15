@@ -9,7 +9,9 @@ public class NetworkManager : MonoBehaviour
 		private const string gameName = "Room1";
 		private const int port = 11000;
 		private const int maxPlayers = 4;
-
+		//public static NetworkPlayer gracze = new NetworkPlayer[4];
+		public static NetworkPlayer[] gracze;
+		private int liczba = 0 ; 
 		private void StartServer ()
 		{
 				Network.InitializeServer (maxPlayers, port, !Network.HavePublicAddress ());
@@ -42,8 +44,15 @@ public class NetworkManager : MonoBehaviour
 
 		void OnConnectedToServer ()
 		{
-				Debug.Log ("Server Joined");
-				SpawnPlayer ();
+			Debug.Log ("Server Joined");
+			SpawnPlayer ();
+			
+				
+		}
+		void OnPlayerConnected(NetworkPlayer player)
+		{
+			gracze [liczba] = player;
+			liczba++;
 		}
 
 		private void SpawnPlayer ()
