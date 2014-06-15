@@ -29,6 +29,7 @@ public class Coin : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D coll){
 		if (spawnedFlag && coll.gameObject.tag == "Player") {
 			despawn();
+
 			if(NetworkManager.gracze[0] == Network.player)
 				Player.punkty[0] += 1;
 			if(NetworkManager.gracze[1] == Network.player)
